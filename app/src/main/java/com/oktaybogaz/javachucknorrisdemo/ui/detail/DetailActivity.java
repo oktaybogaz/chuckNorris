@@ -66,8 +66,6 @@ public class DetailActivity extends AppCompatActivity implements DetailScreenCon
     @Override
     public void showJoke(Joke joke) {
 
-
-
         tvJoke.setText(joke.getValue());
         Picasso.get().load(joke.getIconUrl()).into(ivJoke);
         srLayout.setRefreshing(false);

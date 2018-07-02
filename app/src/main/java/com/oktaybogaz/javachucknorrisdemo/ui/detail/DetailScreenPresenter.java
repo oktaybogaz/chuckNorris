@@ -1,5 +1,6 @@
 package com.oktaybogaz.javachucknorrisdemo.ui.detail;
 
+import android.support.annotation.VisibleForTesting;
 import android.test.suitebuilder.annotation.SmallTest;
 import android.util.Log;
 
@@ -16,6 +17,7 @@ import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
+@VisibleForTesting
 public class DetailScreenPresenter implements DetailScreenContract.Presenter {
 
     Retrofit retrofit;
@@ -52,16 +54,21 @@ public class DetailScreenPresenter implements DetailScreenContract.Presenter {
 
                         mView.showJoke(joke);
 
-                        countTheWord(editPunctiation(joke.getValue()));
 
-                        countTheLetter(destroySpaces(joke.getValue()));
+                        String words = checkWords(joke.getValue());
+                        System.out.println(words);
 
+
+                        String letters = checkLetters(joke.getValue());
+                        System.out.println(letters);
 
                     }
                 });
     }
 
-    private void countTheWord(String sentence) {
+    public String checkWords(String sentence) {
+
+        sentence = sentence.replaceAll("[^a-zA-Z0-9 ]", "").toLowerCase();
 
         Map<String, Integer> wordCount = new HashMap<>();
         for (String word : sentence.split(" ")) {
@@ -72,41 +79,25 @@ public class DetailScreenPresenter implements DetailScreenContract.Presenter {
             }
         }
 
-        System.out.println(wordCount.toString());
+        return wordCount.toString();
     }
 
-    private void countTheLetter(String sentence) {
+    public String checkLetters(String sentence) {
+
+        sentence = sentence.replaceAll(" ", "");
+        sentence = sentence.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
 
         Map<String, Integer> letterCount = new HashMap<>();
-
-        String newSentence = editPunctiation(sentence);
-
-        for (String letter : newSentence.split("")) {
-
+        for (String letter : sentence.split("")) {
+            if (!letter.isEmpty()) {
                 if (letterCount.containsKey(letter)) {
                     letterCount.put(letter, letterCount.get(letter) + 1);
                 } else {
                     letterCount.put(letter, 1);
                 }
-
             }
-        System.out.println(letterCount.toString());
+        }
+        return letterCount.toString();
 
-    }
-
-    private String destroySpaces(String sentence) {
-
-        String newSentence = sentence.trim().toLowerCase();
-        newSentence = newSentence.replaceAll(" ","");
-
-        return newSentence;
-
-    }
-
-    private String editPunctiation(String sentence) {
-
-       sentence = sentence.replaceAll("[^a-zA-Z ]","").toLowerCase();
-
-        return sentence;
     }
 }
