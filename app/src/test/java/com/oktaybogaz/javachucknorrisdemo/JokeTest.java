@@ -1,24 +1,13 @@
 package com.oktaybogaz.javachucknorrisdemo;
 
-import android.support.annotation.VisibleForTesting;
-import android.test.suitebuilder.annotation.SmallTest;
-
-import com.oktaybogaz.javachucknorrisdemo.models.Joke;
-import com.oktaybogaz.javachucknorrisdemo.ui.detail.DetailScreenContract;
 import com.oktaybogaz.javachucknorrisdemo.ui.detail.DetailScreenPresenter;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-
-import java.util.HashMap;
-import java.util.Map;
-
 
 @RunWith(MockitoJUnitRunner.class)
 public class JokeTest {
